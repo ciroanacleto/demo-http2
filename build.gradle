@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven { url 'http://repo.spring.io/plugins-release' }
+        maven { url 'http://repo.spring.io/milestone' }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+defaultTasks 'bootRun'
+
+bootRepackage {
+   mainClass = 'demo.DemoHttp2Application'
+}
+
+springBoot {
+    mainClass = 'demo.DemoHttp2Application'
+    executable = true
+}
+
+bootRun {
+    addResources = true
+}
+
+group = 'org.test'
+version = '0.0.1-SNAPSHOT'
+
+description = "demo-http2"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+        
+     maven { url "https://repo.spring.io/snapshot" }
+     maven { url "https://repo.spring.io/milestone" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+     maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+}
+
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.4.1.RELEASE') {
+		exclude(module: 'spring-boot-starter-tomcat')
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version:'1.4.1.RELEASE'
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.4.1.RELEASE') {
+		exclude(module: 'commons-logging')
+    }
+}
